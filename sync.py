@@ -20,8 +20,8 @@ with sync_playwright() as p:
     page.click("button[type='submit'], input[type='submit']")
     page.wait_for_load_state("networkidle")
 
-    # Navigation vers le planning
-    page.get_by_text("Mon planning", exact=False).first.click()
+    # Force le clic sur "Mon planning (apprenant)" même s'il est dans un sous-menu replié
+    page.locator("span.ui-menuitem-text", has_text="Mon planning").first.evaluate("el => el.closest('a').click()")
     page.wait_for_selector(".fc-view")
     page.wait_for_timeout(2000)
 
