@@ -2,7 +2,7 @@ name: Sync WebAurion
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/30 6-22 * * *'
   workflow_dispatch:
 
 permissions:
@@ -12,8 +12,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
       - name: Installer Playwright
@@ -30,4 +30,4 @@ jobs:
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
           git add planning.ics
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Mise à jour planning" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Mise à jour planning" && git pull --rebase -X ours && git push)
